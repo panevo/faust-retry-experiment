@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+export PREFIX=""
+if [ -d 'venv' ] ; then
+    export PREFIX="venv/bin/"
+fi
+
+export PYTHONPATH=test_acks
+export SIMPLE_SETTINGS=settings
+
+${PREFIX}pytest ${1-"./tests"} ${2}
+${PREFIX}black test_acks tests/ --check --diff
+${PREFIX}flake8 test_acks tests/
